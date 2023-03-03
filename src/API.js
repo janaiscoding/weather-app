@@ -2,7 +2,6 @@
 const API_KEY = `e242732684f64bf197c925a0f8a7be98`;
 // USER INPUT
 let location;
-
 // ALL VARIABLES BASED ON USER INPUT
 let country;
 let tempK;
@@ -23,12 +22,8 @@ let windSpd;
 let state;
 let stateDescription;
 
-// DOM SELECTORS
-const userInput = document.getElementById("location");
-const submitButton = document.getElementById("submit");
-
-// API FUNCTION
-async function getWeatherData() {
+// API FUNCTION - APP FUNCTIONABILITY
+export default async function getWeatherData() {
   try {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=${API_KEY}`,
@@ -89,26 +84,3 @@ const displayWeather = () => {
   console.log(`Weather state: ${state}`);
   console.log(`Weather state description: ${stateDescription}`);
 };
-
-//A USER WILL SELECT A LOCATION
-const setLocation = () => {
-  location = userInput.value;
-  console.log(location);
-  return location;
-};
-
-// HANDLE KEYPRESS
-userInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    setLocation();
-    getWeatherData();
-  }
-});
-
-// HANDLE SUBMIT BUTTON
-submitButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  setLocation();
-  getWeatherData();
-});
