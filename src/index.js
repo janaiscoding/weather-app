@@ -2,7 +2,8 @@
 const API_KEY = `e242732684f64bf197c925a0f8a7be98`;
 // USER INPUT
 let location;
-
+let coordLat;
+let coordLong;
 // ALL VARIABLES BASED ON USER INPUT
 let country;
 let tempK;
