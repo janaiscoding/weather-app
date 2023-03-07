@@ -1,36 +1,34 @@
 import loadHTML from "./loadHTML";
+import { getWeatherData } from "./API";
 
 export default class UI {
   static loadHomepage() {
     loadHTML();
-  }
-  static initializeButtons() {
-    const userInput = document.getElementById("location");
-    const submitButton = document.getElementById("submit");
+    UI.handleSubmitButton()
+    UI.handleKeypress()
   }
   static setLocation(){
-    const location = userInput.value;
-
+    const userInput = document.getElementById("location");
+    let location = userInput.value;
+    console.log(location)
+    return location;
+  }
+  static handleSubmitButton(){
+    const submitButton = document.getElementById("submit");
+    submitButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      UI.setLocation();
+      getWeatherData(location);
+    });
+  }
+  static handleKeypress(){
+    const userInput = document.getElementById("location");
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        UI.setLocation();
+        getWeatherData(location);
+      }
+    });  
   }
 }
-//A USER WILL SELECT A LOCATION
-const setLocation = () => {
-    location = userInput.value;
-    return location;
-  };
-  
-  // HANDLE KEYPRESS
-  userInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      setLocation();
-      getWeatherData(location);
-    }
-  });
-  
-  // HANDLE SUBMIT BUTTON
-  submitButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    setLocation();
-    getWeatherData(location);
-  });
