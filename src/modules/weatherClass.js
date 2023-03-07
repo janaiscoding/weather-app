@@ -1,10 +1,10 @@
-export default class WeatherData {
+export default class WeatherClass {
   constructor(
     country,
-    tempK,
-    realK,
-    minK,
-    maxK,
+    temp,
+    real,
+    min,
+    max,
     pressure,
     humidity,
     windSpd,
@@ -12,10 +12,10 @@ export default class WeatherData {
     stateDescription
   ) {
     this.country = country;
-    this.tempK = tempK;
-    this.realK = realK;
-    this.minK = minK;
-    this.maxK = maxK;
+    this.temp = temp;
+    this.real = real;
+    this.min = min;
+    this.max = max;
     this.pressure = pressure;
     this.humidity = humidity;
     this.windSpd = windSpd;
@@ -25,17 +25,17 @@ export default class WeatherData {
   setCountry(country) {
     this.country = country;
   }
-  setTempK(tempK) {
-    this.tempK = tempK;
+  setTemp(temp) {
+    this.temp = temp;
   }
-  setRealK(realK) {
-    this.realK = realK;
+  setReal(real) {
+    this.real = real;
   }
-  setMinK(minK) {
-    this.minK = minK;
+  setMin(min) {
+    this.min = min;
   }
-  setMaxK(maxK) {
-    this.maxK = maxK;
+  setMax(max) {
+    this.max = max;
   }
   setPressure(pressure) {
     this.pressure = pressure;
@@ -52,4 +52,5 @@ export default class WeatherData {
   setStateDescription(stateDescription){
     this.stateDescription = stateDescription
   }
+
 }
