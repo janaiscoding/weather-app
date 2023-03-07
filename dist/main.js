@@ -1,144 +1,145 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/modules/UI.js":
+/*!***************************!*\
+  !*** ./src/modules/UI.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ UI)
+/* harmony export */ });
+/* harmony import */ var _loadHTML__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./loadHTML */ "./src/modules/loadHTML.js");
+
+
+class UI {
+  static loadHomepage() {
+    (0,_loadHTML__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  }
+  static initializeButtons() {
+    const userInput = document.getElementById("location");
+    const submitButton = document.getElementById("submit");
+  }
+  static setLocation(){
+    const location = userInput.value;
+
+  }
+}
+//A USER WILL SELECT A LOCATION
+const setLocation = () => {
+    location = userInput.value;
+    return location;
+  };
+  
+  // HANDLE KEYPRESS
+  userInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setLocation();
+      getWeatherData(location);
+    }
+  });
+  
+  // HANDLE SUBMIT BUTTON
+  submitButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    setLocation();
+    getWeatherData(location);
+  });
+
+/***/ }),
+
+/***/ "./src/modules/loadHTML.js":
+/*!*********************************!*\
+  !*** ./src/modules/loadHTML.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ loadHTML)
+/* harmony export */ });
+function loadHTML() {
+  const content = document.querySelector(".content");
+  content.innerHTML += `    <div>This is a test.</div>
+    <input id="location">
+    <button id="submit">Submit</button>`;
+}
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-// MY API KEY :)
-const API_KEY = `e242732684f64bf197c925a0f8a7be98`;
-// USER INPUT
-let location;
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_UI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/UI */ "./src/modules/UI.js");
 
-// ALL VARIABLES BASED ON USER INPUT
-let country;
-// NORMAL WEATHER
-let tempK;
-let tempC;
-let tempF;
-// REAL FEEL WEATHER
-let realK;
-let realC;
-let realF;
-// MIN WEATHER
-let minK;
-let minC;
-let minF;
-//MAX WEATHER
-let maxK;
-let maxC;
-let maxF;
-// AIR PRESSURE
-let pressure;
-//HUMIDITY
-let humidity;
-// WIND
-let windSpd;
-// WEATHER STATE
-let state;
-let stateDescription;
-
-// DOM SELECTORS
-const userInput = document.getElementById("location");
-const submitButton = document.getElementById("submit");
-
-// API FUNCTION
-async function getWeatherData() {
-  try {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${location}&APPID=${API_KEY}`,
-      {
-        mode: "cors",
-      }
-    );
-    const weatherData = await response.json();
-    console.log(weatherData);
-    //country
-    country = weatherData.sys.country;
-    //normal temp
-    tempK = weatherData.main.temp;
-    //real temp
-    realK = weatherData.main.feels_like;
-    //min weather
-    minK = weatherData.main.temp_min;
-    //max weather
-    maxK = weatherData.main.temp_max;
-    //air pressure
-    pressure = weatherData.main.pressure;
-    //humidity
-    humidity = weatherData.main.humidity;
-    //wind speed
-    windSpd = weatherData.wind.speed;
-    //weather state
-    state = weatherData.weather[0].main;
-    stateDescription = weatherData.weather[0].description;
-    convertWeather();
-    displayWeather();
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-// CONVERTOR FUNCTION K TO F
-const kelvinToFahrenheit = (k) => {
-  return Math.floor((k - 273.15) * 1.8 + 32);
-};
-// CONVERTOR FUNCTION K TO C
-const kelvinToCelsius = (k) => {
-  return Math.floor(k - 273.15);
-};
-// SET ALL WEATHERS TO CORRECT UNITS
-const convertWeather = () => {
-  //normal weather
-  tempF = kelvinToFahrenheit(tempK);
-  tempC = kelvinToCelsius(tempK);
-  //real feel
-  realF = kelvinToFahrenheit(realK);
-  realC = kelvinToCelsius(realK);
-  //min temp
-  minF = kelvinToFahrenheit(minK);
-  minC = kelvinToCelsius(minK);
-  //max temp
-  maxF = kelvinToFahrenheit(maxK);
-  maxC = kelvinToCelsius(maxK);
-};
-
-// DISPLAY WEATHER DATA
-const displayWeather = () => {
-  console.log(location);
-  console.log(country);
-  console.log(`Normal temp:${tempF}F, or ${tempC}C`);
-  console.log(`Real feel: ${realF}F, or ${realC}C.`);
-  console.log(`Min temp: ${minF}F, or ${minC}C.`);
-  console.log(`Max temp: ${maxF}F, or ${maxC}C.`);
-  console.log(`Air pressure: ${pressure}`);
-  console.log(`Current Humitity: ${humidity} %`);
-  console.log(`Wind Speed: ${windSpd} m/s`);
-  console.log(`Weather state: ${state}`);
-  console.log(`Weather state description: ${stateDescription}`);
-};
-
-//A USER WILL SELECT A LOCATION
-const setLocation = () => {
-  location = userInput.value;
-  console.log(location);
-  return location;
-};
-
-// HANDLE KEYPRESS
-userInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    setLocation();
-    getWeatherData();
-  }
-});
-
-// HANDLE SUBMIT BUTTON
-submitButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  setLocation();
-  getWeatherData();
-});
+document.addEventListener('DOMContentLoaded', _modules_UI__WEBPACK_IMPORTED_MODULE_0__["default"].loadHomepage)
+})();
 
 /******/ })()
 ;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWFpbi5qcyIsIm1hcHBpbmdzIjoiOzs7OztBQUFBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQSwyREFBMkQsU0FBUyxTQUFTLFFBQVE7QUFDckY7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsSUFBSTtBQUNKO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsNkJBQTZCLE1BQU0sUUFBUSxNQUFNO0FBQ2pELDRCQUE0QixNQUFNLFFBQVEsTUFBTTtBQUNoRCwyQkFBMkIsS0FBSyxRQUFRLEtBQUs7QUFDN0MsMkJBQTJCLEtBQUssUUFBUSxLQUFLO0FBQzdDLCtCQUErQixTQUFTO0FBQ3hDLG1DQUFtQyxVQUFVO0FBQzdDLDZCQUE2QixTQUFTO0FBQ3RDLGdDQUFnQyxNQUFNO0FBQ3RDLDRDQUE0QyxpQkFBaUI7QUFDN0Q7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsQ0FBQzs7QUFFRDtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsQ0FBQyIsInNvdXJjZXMiOlsid2VicGFjazovL3dlYXRoZXItYXBwLy4vc3JjL2luZGV4LmpzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIE1ZIEFQSSBLRVkgOilcbmNvbnN0IEFQSV9LRVkgPSBgZTI0MjczMjY4NGY2NGJmMTk3YzkyNWEwZjhhN2JlOThgO1xuLy8gVVNFUiBJTlBVVFxubGV0IGxvY2F0aW9uO1xuXG4vLyBBTEwgVkFSSUFCTEVTIEJBU0VEIE9OIFVTRVIgSU5QVVRcbmxldCBjb3VudHJ5O1xuLy8gTk9STUFMIFdFQVRIRVJcbmxldCB0ZW1wSztcbmxldCB0ZW1wQztcbmxldCB0ZW1wRjtcbi8vIFJFQUwgRkVFTCBXRUFUSEVSXG5sZXQgcmVhbEs7XG5sZXQgcmVhbEM7XG5sZXQgcmVhbEY7XG4vLyBNSU4gV0VBVEhFUlxubGV0IG1pbks7XG5sZXQgbWluQztcbmxldCBtaW5GO1xuLy9NQVggV0VBVEhFUlxubGV0IG1heEs7XG5sZXQgbWF4QztcbmxldCBtYXhGO1xuLy8gQUlSIFBSRVNTVVJFXG5sZXQgcHJlc3N1cmU7XG4vL0hVTUlESVRZXG5sZXQgaHVtaWRpdHk7XG4vLyBXSU5EXG5sZXQgd2luZFNwZDtcbi8vIFdFQVRIRVIgU1RBVEVcbmxldCBzdGF0ZTtcbmxldCBzdGF0ZURlc2NyaXB0aW9uO1xuXG4vLyBET00gU0VMRUNUT1JTXG5jb25zdCB1c2VySW5wdXQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImxvY2F0aW9uXCIpO1xuY29uc3Qgc3VibWl0QnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJzdWJtaXRcIik7XG5cbi8vIEFQSSBGVU5DVElPTlxuYXN5bmMgZnVuY3Rpb24gZ2V0V2VhdGhlckRhdGEoKSB7XG4gIHRyeSB7XG4gICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChcbiAgICAgIGBodHRwczovL2FwaS5vcGVud2VhdGhlcm1hcC5vcmcvZGF0YS8yLjUvd2VhdGhlcj9xPSR7bG9jYXRpb259JkFQUElEPSR7QVBJX0tFWX1gLFxuICAgICAge1xuICAgICAgICBtb2RlOiBcImNvcnNcIixcbiAgICAgIH1cbiAgICApO1xuICAgIGNvbnN0IHdlYXRoZXJEYXRhID0gYXdhaXQgcmVzcG9uc2UuanNvbigpO1xuICAgIGNvbnNvbGUubG9nKHdlYXRoZXJEYXRhKTtcbiAgICAvL2NvdW50cnlcbiAgICBjb3VudHJ5ID0gd2VhdGhlckRhdGEuc3lzLmNvdW50cnk7XG4gICAgLy9ub3JtYWwgdGVtcFxuICAgIHRlbXBLID0gd2VhdGhlckRhdGEubWFpbi50ZW1wO1xuICAgIC8vcmVhbCB0ZW1wXG4gICAgcmVhbEsgPSB3ZWF0aGVyRGF0YS5tYWluLmZlZWxzX2xpa2U7XG4gICAgLy9taW4gd2VhdGhlclxuICAgIG1pbksgPSB3ZWF0aGVyRGF0YS5tYWluLnRlbXBfbWluO1xuICAgIC8vbWF4IHdlYXRoZXJcbiAgICBtYXhLID0gd2VhdGhlckRhdGEubWFpbi50ZW1wX21heDtcbiAgICAvL2FpciBwcmVzc3VyZVxuICAgIHByZXNzdXJlID0gd2VhdGhlckRhdGEubWFpbi5wcmVzc3VyZTtcbiAgICAvL2h1bWlkaXR5XG4gICAgaHVtaWRpdHkgPSB3ZWF0aGVyRGF0YS5tYWluLmh1bWlkaXR5O1xuICAgIC8vd2luZCBzcGVlZFxuICAgIHdpbmRTcGQgPSB3ZWF0aGVyRGF0YS53aW5kLnNwZWVkO1xuICAgIC8vd2VhdGhlciBzdGF0ZVxuICAgIHN0YXRlID0gd2VhdGhlckRhdGEud2VhdGhlclswXS5tYWluO1xuICAgIHN0YXRlRGVzY3JpcHRpb24gPSB3ZWF0aGVyRGF0YS53ZWF0aGVyWzBdLmRlc2NyaXB0aW9uO1xuICAgIGNvbnZlcnRXZWF0aGVyKCk7XG4gICAgZGlzcGxheVdlYXRoZXIoKTtcbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmxvZyhlcnJvcik7XG4gIH1cbn1cblxuLy8gQ09OVkVSVE9SIEZVTkNUSU9OIEsgVE8gRlxuY29uc3Qga2VsdmluVG9GYWhyZW5oZWl0ID0gKGspID0+IHtcbiAgcmV0dXJuIE1hdGguZmxvb3IoKGsgLSAyNzMuMTUpICogMS44ICsgMzIpO1xufTtcbi8vIENPTlZFUlRPUiBGVU5DVElPTiBLIFRPIENcbmNvbnN0IGtlbHZpblRvQ2Vsc2l1cyA9IChrKSA9PiB7XG4gIHJldHVybiBNYXRoLmZsb29yKGsgLSAyNzMuMTUpO1xufTtcbi8vIFNFVCBBTEwgV0VBVEhFUlMgVE8gQ09SUkVDVCBVTklUU1xuY29uc3QgY29udmVydFdlYXRoZXIgPSAoKSA9PiB7XG4gIC8vbm9ybWFsIHdlYXRoZXJcbiAgdGVtcEYgPSBrZWx2aW5Ub0ZhaHJlbmhlaXQodGVtcEspO1xuICB0ZW1wQyA9IGtlbHZpblRvQ2Vsc2l1cyh0ZW1wSyk7XG4gIC8vcmVhbCBmZWVsXG4gIHJlYWxGID0ga2VsdmluVG9GYWhyZW5oZWl0KHJlYWxLKTtcbiAgcmVhbEMgPSBrZWx2aW5Ub0NlbHNpdXMocmVhbEspO1xuICAvL21pbiB0ZW1wXG4gIG1pbkYgPSBrZWx2aW5Ub0ZhaHJlbmhlaXQobWluSyk7XG4gIG1pbkMgPSBrZWx2aW5Ub0NlbHNpdXMobWluSyk7XG4gIC8vbWF4IHRlbXBcbiAgbWF4RiA9IGtlbHZpblRvRmFocmVuaGVpdChtYXhLKTtcbiAgbWF4QyA9IGtlbHZpblRvQ2Vsc2l1cyhtYXhLKTtcbn07XG5cbi8vIERJU1BMQVkgV0VBVEhFUiBEQVRBXG5jb25zdCBkaXNwbGF5V2VhdGhlciA9ICgpID0+IHtcbiAgY29uc29sZS5sb2cobG9jYXRpb24pO1xuICBjb25zb2xlLmxvZyhjb3VudHJ5KTtcbiAgY29uc29sZS5sb2coYE5vcm1hbCB0ZW1wOiR7dGVtcEZ9Riwgb3IgJHt0ZW1wQ31DYCk7XG4gIGNvbnNvbGUubG9nKGBSZWFsIGZlZWw6ICR7cmVhbEZ9Riwgb3IgJHtyZWFsQ31DLmApO1xuICBjb25zb2xlLmxvZyhgTWluIHRlbXA6ICR7bWluRn1GLCBvciAke21pbkN9Qy5gKTtcbiAgY29uc29sZS5sb2coYE1heCB0ZW1wOiAke21heEZ9Riwgb3IgJHttYXhDfUMuYCk7XG4gIGNvbnNvbGUubG9nKGBBaXIgcHJlc3N1cmU6ICR7cHJlc3N1cmV9YCk7XG4gIGNvbnNvbGUubG9nKGBDdXJyZW50IEh1bWl0aXR5OiAke2h1bWlkaXR5fSAlYCk7XG4gIGNvbnNvbGUubG9nKGBXaW5kIFNwZWVkOiAke3dpbmRTcGR9IG0vc2ApO1xuICBjb25zb2xlLmxvZyhgV2VhdGhlciBzdGF0ZTogJHtzdGF0ZX1gKTtcbiAgY29uc29sZS5sb2coYFdlYXRoZXIgc3RhdGUgZGVzY3JpcHRpb246ICR7c3RhdGVEZXNjcmlwdGlvbn1gKTtcbn07XG5cbi8vQSBVU0VSIFdJTEwgU0VMRUNUIEEgTE9DQVRJT05cbmNvbnN0IHNldExvY2F0aW9uID0gKCkgPT4ge1xuICBsb2NhdGlvbiA9IHVzZXJJbnB1dC52YWx1ZTtcbiAgY29uc29sZS5sb2cobG9jYXRpb24pO1xuICByZXR1cm4gbG9jYXRpb247XG59O1xuXG4vLyBIQU5ETEUgS0VZUFJFU1NcbnVzZXJJbnB1dC5hZGRFdmVudExpc3RlbmVyKFwia2V5cHJlc3NcIiwgKGUpID0+IHtcbiAgaWYgKGUua2V5ID09PSBcIkVudGVyXCIpIHtcbiAgICBlLnByZXZlbnREZWZhdWx0KCk7XG4gICAgc2V0TG9jYXRpb24oKTtcbiAgICBnZXRXZWF0aGVyRGF0YSgpO1xuICB9XG59KTtcblxuLy8gSEFORExFIFNVQk1JVCBCVVRUT05cbnN1Ym1pdEJ1dHRvbi5hZGRFdmVudExpc3RlbmVyKFwiY2xpY2tcIiwgKGUpID0+IHtcbiAgZS5wcmV2ZW50RGVmYXVsdCgpO1xuICBzZXRMb2NhdGlvbigpO1xuICBnZXRXZWF0aGVyRGF0YSgpO1xufSk7XG4iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWFpbi5qcyIsIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7QUFBa0M7O0FBRW5CO0FBQ2Y7QUFDQSxJQUFJLHFEQUFRO0FBQ1o7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsR0FBRztBQUNIO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLEdBQUc7Ozs7Ozs7Ozs7Ozs7O0FDbkNZO0FBQ2Y7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7Ozs7OztVQ0xBO1VBQ0E7O1VBRUE7VUFDQTtVQUNBO1VBQ0E7VUFDQTtVQUNBO1VBQ0E7VUFDQTtVQUNBO1VBQ0E7VUFDQTtVQUNBO1VBQ0E7O1VBRUE7VUFDQTs7VUFFQTtVQUNBO1VBQ0E7Ozs7O1dDdEJBO1dBQ0E7V0FDQTtXQUNBO1dBQ0EseUNBQXlDLHdDQUF3QztXQUNqRjtXQUNBO1dBQ0E7Ozs7O1dDUEE7Ozs7O1dDQUE7V0FDQTtXQUNBO1dBQ0EsdURBQXVELGlCQUFpQjtXQUN4RTtXQUNBLGdEQUFnRCxhQUFhO1dBQzdEOzs7Ozs7Ozs7Ozs7QUNOOEI7QUFDOUIsOENBQThDLGdFQUFlLEMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly93ZWF0aGVyLWFwcC8uL3NyYy9tb2R1bGVzL1VJLmpzIiwid2VicGFjazovL3dlYXRoZXItYXBwLy4vc3JjL21vZHVsZXMvbG9hZEhUTUwuanMiLCJ3ZWJwYWNrOi8vd2VhdGhlci1hcHAvd2VicGFjay9ib290c3RyYXAiLCJ3ZWJwYWNrOi8vd2VhdGhlci1hcHAvd2VicGFjay9ydW50aW1lL2RlZmluZSBwcm9wZXJ0eSBnZXR0ZXJzIiwid2VicGFjazovL3dlYXRoZXItYXBwL3dlYnBhY2svcnVudGltZS9oYXNPd25Qcm9wZXJ0eSBzaG9ydGhhbmQiLCJ3ZWJwYWNrOi8vd2VhdGhlci1hcHAvd2VicGFjay9ydW50aW1lL21ha2UgbmFtZXNwYWNlIG9iamVjdCIsIndlYnBhY2s6Ly93ZWF0aGVyLWFwcC8uL3NyYy9pbmRleC5qcyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgbG9hZEhUTUwgZnJvbSBcIi4vbG9hZEhUTUxcIjtcblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgVUkge1xuICBzdGF0aWMgbG9hZEhvbWVwYWdlKCkge1xuICAgIGxvYWRIVE1MKCk7XG4gIH1cbiAgc3RhdGljIGluaXRpYWxpemVCdXR0b25zKCkge1xuICAgIGNvbnN0IHVzZXJJbnB1dCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwibG9jYXRpb25cIik7XG4gICAgY29uc3Qgc3VibWl0QnV0dG9uID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJzdWJtaXRcIik7XG4gIH1cbiAgc3RhdGljIHNldExvY2F0aW9uKCl7XG4gICAgY29uc3QgbG9jYXRpb24gPSB1c2VySW5wdXQudmFsdWU7XG5cbiAgfVxufVxuLy9BIFVTRVIgV0lMTCBTRUxFQ1QgQSBMT0NBVElPTlxuY29uc3Qgc2V0TG9jYXRpb24gPSAoKSA9PiB7XG4gICAgbG9jYXRpb24gPSB1c2VySW5wdXQudmFsdWU7XG4gICAgcmV0dXJuIGxvY2F0aW9uO1xuICB9O1xuICBcbiAgLy8gSEFORExFIEtFWVBSRVNTXG4gIHVzZXJJbnB1dC5hZGRFdmVudExpc3RlbmVyKFwia2V5cHJlc3NcIiwgKGUpID0+IHtcbiAgICBpZiAoZS5rZXkgPT09IFwiRW50ZXJcIikge1xuICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpO1xuICAgICAgc2V0TG9jYXRpb24oKTtcbiAgICAgIGdldFdlYXRoZXJEYXRhKGxvY2F0aW9uKTtcbiAgICB9XG4gIH0pO1xuICBcbiAgLy8gSEFORExFIFNVQk1JVCBCVVRUT05cbiAgc3VibWl0QnV0dG9uLmFkZEV2ZW50TGlzdGVuZXIoXCJjbGlja1wiLCAoZSkgPT4ge1xuICAgIGUucHJldmVudERlZmF1bHQoKTtcbiAgICBzZXRMb2NhdGlvbigpO1xuICAgIGdldFdlYXRoZXJEYXRhKGxvY2F0aW9uKTtcbiAgfSk7IiwiZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gbG9hZEhUTUwoKSB7XG4gIGNvbnN0IGNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLmNvbnRlbnRcIik7XG4gIGNvbnRlbnQuaW5uZXJIVE1MICs9IGAgICAgPGRpdj5UaGlzIGlzIGEgdGVzdC48L2Rpdj5cbiAgICA8aW5wdXQgaWQ9XCJsb2NhdGlvblwiPlxuICAgIDxidXR0b24gaWQ9XCJzdWJtaXRcIj5TdWJtaXQ8L2J1dHRvbj5gO1xufVxuIiwiLy8gVGhlIG1vZHVsZSBjYWNoZVxudmFyIF9fd2VicGFja19tb2R1bGVfY2FjaGVfXyA9IHt9O1xuXG4vLyBUaGUgcmVxdWlyZSBmdW5jdGlvblxuZnVuY3Rpb24gX193ZWJwYWNrX3JlcXVpcmVfXyhtb2R1bGVJZCkge1xuXHQvLyBDaGVjayBpZiBtb2R1bGUgaXMgaW4gY2FjaGVcblx0dmFyIGNhY2hlZE1vZHVsZSA9IF9fd2VicGFja19tb2R1bGVfY2FjaGVfX1ttb2R1bGVJZF07XG5cdGlmIChjYWNoZWRNb2R1bGUgIT09IHVuZGVmaW5lZCkge1xuXHRcdHJldHVybiBjYWNoZWRNb2R1bGUuZXhwb3J0cztcblx0fVxuXHQvLyBDcmVhdGUgYSBuZXcgbW9kdWxlIChhbmQgcHV0IGl0IGludG8gdGhlIGNhY2hlKVxuXHR2YXIgbW9kdWxlID0gX193ZWJwYWNrX21vZHVsZV9jYWNoZV9fW21vZHVsZUlkXSA9IHtcblx0XHQvLyBubyBtb2R1bGUuaWQgbmVlZGVkXG5cdFx0Ly8gbm8gbW9kdWxlLmxvYWRlZCBuZWVkZWRcblx0XHRleHBvcnRzOiB7fVxuXHR9O1xuXG5cdC8vIEV4ZWN1dGUgdGhlIG1vZHVsZSBmdW5jdGlvblxuXHRfX3dlYnBhY2tfbW9kdWxlc19fW21vZHVsZUlkXShtb2R1bGUsIG1vZHVsZS5leHBvcnRzLCBfX3dlYnBhY2tfcmVxdWlyZV9fKTtcblxuXHQvLyBSZXR1cm4gdGhlIGV4cG9ydHMgb2YgdGhlIG1vZHVsZVxuXHRyZXR1cm4gbW9kdWxlLmV4cG9ydHM7XG59XG5cbiIsIi8vIGRlZmluZSBnZXR0ZXIgZnVuY3Rpb25zIGZvciBoYXJtb255IGV4cG9ydHNcbl9fd2VicGFja19yZXF1aXJlX18uZCA9IChleHBvcnRzLCBkZWZpbml0aW9uKSA9PiB7XG5cdGZvcih2YXIga2V5IGluIGRlZmluaXRpb24pIHtcblx0XHRpZihfX3dlYnBhY2tfcmVxdWlyZV9fLm8oZGVmaW5pdGlvbiwga2V5KSAmJiAhX193ZWJwYWNrX3JlcXVpcmVfXy5vKGV4cG9ydHMsIGtleSkpIHtcblx0XHRcdE9iamVjdC5kZWZpbmVQcm9wZXJ0eShleHBvcnRzLCBrZXksIHsgZW51bWVyYWJsZTogdHJ1ZSwgZ2V0OiBkZWZpbml0aW9uW2tleV0gfSk7XG5cdFx0fVxuXHR9XG59OyIsIl9fd2VicGFja19yZXF1aXJlX18ubyA9IChvYmosIHByb3ApID0+IChPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5LmNhbGwob2JqLCBwcm9wKSkiLCIvLyBkZWZpbmUgX19lc01vZHVsZSBvbiBleHBvcnRzXG5fX3dlYnBhY2tfcmVxdWlyZV9fLnIgPSAoZXhwb3J0cykgPT4ge1xuXHRpZih0eXBlb2YgU3ltYm9sICE9PSAndW5kZWZpbmVkJyAmJiBTeW1ib2wudG9TdHJpbmdUYWcpIHtcblx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgU3ltYm9sLnRvU3RyaW5nVGFnLCB7IHZhbHVlOiAnTW9kdWxlJyB9KTtcblx0fVxuXHRPYmplY3QuZGVmaW5lUHJvcGVydHkoZXhwb3J0cywgJ19fZXNNb2R1bGUnLCB7IHZhbHVlOiB0cnVlIH0pO1xufTsiLCJpbXBvcnQgVUkgZnJvbSBcIi4vbW9kdWxlcy9VSVwiO1xuZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIFVJLmxvYWRIb21lcGFnZSkiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=
