@@ -198,20 +198,20 @@ userInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     setLocation();
-    clearInput();
     renderCurrent();
     clearContainer();
     requestForecast();
+    clearInput();
   }
 });
 
 // HANDLE SUBMIT BUTTON
 submitIcon.addEventListener("click", () => {
   setLocation();
-  clearInput();
   renderCurrent();
   clearContainer();
   requestForecast();
+  clearInput();
 });
 
 // HANDLE UNITS BUTTONS
@@ -241,7 +241,7 @@ requestForecast();
 
 function setTheme() {
   const darkActive = document.querySelector(".fa-moon");
-  const lightActive = document.querySelector(".fa-lightbulb")
+  const lightActive = document.querySelector(".fa-lightbulb");
   const root = document.documentElement;
   const newTheme = root.className === "Dark" ? "Light" : "Dark";
   root.className = newTheme;

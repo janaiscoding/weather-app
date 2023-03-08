@@ -75,7 +75,7 @@ input {
   font-size: 20px;
 }
 .fa-moon {
-  display: block;
+  display: none;
   font-size: 20px;
 }
 .fa-moon:hover,
@@ -83,7 +83,7 @@ input {
   cursor: pointer;
 }
 .fa-lightbulb {
-  display: none;
+  display: block;
   font-size: 20px;
 }
 .fa-magnifying-glass:hover {
