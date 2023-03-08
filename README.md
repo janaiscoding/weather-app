@@ -1,7 +1,7 @@
 <h1> Jana's Weather App </h1>
 
 # Live Demo 
-![](https://github.com/janaiscoding/weather-app/blob/main/assets/weather-app-preview.gif)
+![](https://github.com/janaiscoding/weather-app/blob/main/src/assets/weather-app-preview.gif)
 - See the full live preview [here](https://janaiscoding.github.io/weather-app/)
 
 <h1> Built with </h1>
