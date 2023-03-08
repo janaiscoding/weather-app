@@ -1,42 +1,192 @@
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 1.3rem;
-  font-weight: 600;
+@font-face {
+  font-family: "Inder";
+  src: url(/src/assets/Inder/Inder-Regular.ttf);
+  font-style: normal;
 }
 :root {
-  --background-grey: #272729;
-  --background-black: #0e100f;
-  --primary-white: #dae0e0;
+  font-family: "Inder";
+  --background-color: #f8e8e8;
+  --primary-pink: #f18282;
+  --secondary-pink: #fcbfbf;
+  --font-color: black;
+}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background-color: var(--background-grey);
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: var(--background-color);
+  color: var(--font-color);
 }
-
-.content {
+/*HEADER*/
+.navbar {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 95vh;
-  background-color: var(--background-black);
-  color: var(--primary-white);
-  width: 95%;
-  border-radius: 30px;
+  background-color: var(--primary-pink);
+  height: 10vh;
+  padding: 0px 100px;
+  -webkit-box-shadow: 0px 5px 17px -6px rgba(0, 0, 0, 0.54);
+  box-shadow: 0px 5px 17px -6px rgba(0, 0, 0, 0.54);
 }
-
-i:hover {
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+}
+input {
+  width: 300px;
+  height: 35px;
+  border-radius: 20px;
+  outline: none;
+  background-color: var(--background-color);
+  border-color: transparent;
+  padding: 0px 25px;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+.units-handler{
+  font-size: 25px;
+}
+.units-handler:hover{
   cursor: pointer;
 }
-
 .search {
-  justify-self: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.fa-magnifying-glass {
+  font-size: 25px;
+}
+.fa-magnifying-glass:hover{
+  cursor: pointer;
+}
+.social-link {
+  color: var(--font-color);
+  font-size: 1.3rem;
 }
 
+/*MAIN CONTENT*/
+.content {
+  padding: 0px 100px;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+/*CURRENT INFO CARD*/
+.current-weather-info {
+  background-color: var(--secondary-pink);
+  border-radius: 30px;
+  border: 1px solid #b98585;
+  padding: 20px;
+  width: 600px;
+  height: 350px;
+  -webkit-box-shadow: 0px 5px 18px -4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 5px 18px -4px rgba(0, 0, 0, 0.5);
+}
+.top-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #b98585;
+}
+.city-name {
+  font-size: 48px;
+  text-transform: capitalize;
+}
+
+.middle-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.temperature-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  border-right: 1px solid #b98585;
+  padding: 20px;
+}
+.temp-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.icon-wrapper{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+.fa-temperature-three-quarters{
+  font-size: 16px;
+}
+.state-description {
+  font-size: 16px;
+  align-self: center;
+  text-transform: capitalize;
+}
+.temp {
+  font-size: 86px;
+}
+.units {
+  font-size: 48px;
+}
+.right-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 10px 20px;
+}
+.pressure-group,
+.humidity-group,
+.wind-group {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+.pressure,
+.humidity,
+.wind-speed {
+  font-weight: bold;
+}
+.line {
+  border-bottom: 1px solid #b98585;
+}
+.bottom-wrapper {
+  display: flex;
+  padding: 10px 20px;
+  justify-content: space-between;
+  border-top: 1px solid #b98585;
+}
+
+/*FOOTER*/
+footer {
+  background-color: var(--primary-pink);
+  -webkit-box-shadow: 0px -5px 10px -4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px -5px 10px -4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
+}
+.footer-link {
+  color: var(--font-color);
+}
+/* GLOBAL SETTINGS */
+a,
+a:visited,
+a:focus {
+  text-decoration: none;
+}
+
+input:focus,
+input:active {
+  border-color: transparent;
+}

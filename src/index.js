@@ -2,19 +2,22 @@ import "./style.css";
 import WeatherClass from "./modules/weatherClass";
 const API_KEY = "e242732684f64bf197c925a0f8a7be98";
 
-
 // DOM SELECTORS
 const userInput = document.getElementById("location");
 const submitIcon = document.querySelector(".fa-magnifying-glass");
+const unitHandler = document.querySelector(".units-handler");
 // variables
 let location = "galati";
 let lat = "45.4338215";
 let lon = "28.0549395";
 let units = "metric";
+let unitSymbol = "C";
+let windUnit = "m/s";
 // weather app class
 let currentObj = new WeatherClass();
 // Initialize project
 renderCurrent();
+//API functions
 async function requestCoord() {
   try {
     const response = await fetch(
@@ -30,7 +33,7 @@ async function requestCoord() {
     console.log(`Error: ${error}`);
   }
 }
-
+// API current weather
 async function requestCurrent() {
   await requestCoord();
   try {
@@ -54,10 +57,62 @@ async function requestCurrent() {
     console.log(`Error: ${error}`);
   }
 }
-
+// DISPLAY
 async function renderCurrent() {
   await requestCoord();
   await requestCurrent();
+  const content = document.querySelector(".content");
+  content.innerHTML = ` <div class="current-weather-info">
+  <div class="top-wrapper">
+    <img
+      src="./assets-temporary/sunny.png"
+      alt="image of state of current weather"
+      class="state"
+    />
+    <div class="city-name">${location}</div>
+  </div>
+  <div class="middle-wrapper">
+    <div class="temperature-group">
+      <div class="temp-wrapper">
+        <div class="temp">${currentObj.temp}</div>
+        <div class="units">°${unitSymbol}</div>
+      </div>
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-temperature-quarter"></i>
+        <div class="state-description">${currentObj.stateDescription}</div>
+      </div>
+    </div>
+    <div class="right-content-wrapper">
+      <div class="pressure-group">
+        <div class="icon-wrapper">
+          <i class="fa-solid fa-droplet"></i>
+          <div class="pressure-title">Pressure</div>
+        </div>
+        <div class="pressure">${currentObj.pressure} hPa</div>
+      </div>
+      <div class="line"></div>
+      <div class="humidity-group">
+        <div class="icon-wrapper">
+          <i class="fa-solid fa-droplet"></i>
+          <div class="humidity-title">Humidity</div>
+        </div>
+        <div class="humidity">${currentObj.humidity} %</div>
+      </div>
+      <div class="line"></div>
+      <div class="wind-group">
+        <div class="icon-wrapper">
+          <i class="fa-solid fa-wind"></i>
+          <div class="wind-speed-title">Wind Speed</div>
+        </div>
+        <div class="wind-speed">${currentObj.windSpd} ${windUnit}</div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-wrapper">
+    <div class="current-date">8 March, 2023</div>
+    <div class="country">${currentObj.country}</div>
+  </div>
+</div>`;
   console.log(currentObj);
   console.log(`rendering done`);
 }
@@ -85,14 +140,20 @@ submitIcon.addEventListener("click", () => {
 });
 
 // HANDLE UNITS BUTTONS
-const imperialButton = document.getElementById("imperial");
-imperialButton.onclick = () => {
-  units = "imperial";
-  renderCurrent();
+const updateUnit = () => {
+  if (unitHandler.textContent === "°C") {
+    units = "imperial";
+    unitSymbol = "F";
+    windUnit = "m/h"
+    unitHandler.textContent = "°F";
+  } else if (unitHandler.textContent === "°F") {
+    units = "metric";
+    unitSymbol = "C";
+    windUnit = "m/s"
+    unitHandler.textContent = "°C";
+  }
 };
-
-const metricButton = document.getElementById("metric");
-metricButton.onclick = () => {
-  units = "metric";
+unitHandler.onclick = () => {
+  updateUnit();
   renderCurrent();
 };
