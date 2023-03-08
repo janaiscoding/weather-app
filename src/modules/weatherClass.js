@@ -3,8 +3,6 @@ export default class WeatherClass {
     country,
     temp,
     real,
-    min,
-    max,
     pressure,
     humidity,
     windSpd,
@@ -14,8 +12,6 @@ export default class WeatherClass {
     this.country = country;
     this.temp = temp;
     this.real = real;
-    this.min = min;
-    this.max = max;
     this.pressure = pressure;
     this.humidity = humidity;
     this.windSpd = windSpd;
@@ -30,12 +26,6 @@ export default class WeatherClass {
   }
   setReal(real) {
     this.real = real;
-  }
-  setMin(min) {
-    this.min = min;
-  }
-  setMax(max) {
-    this.max = max;
   }
   setPressure(pressure) {
     this.pressure = pressure;
