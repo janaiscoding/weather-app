@@ -7,9 +7,9 @@ const userInput = document.getElementById("location");
 const submitIcon = document.querySelector(".fa-magnifying-glass");
 const unitHandler = document.querySelector(".units-handler");
 // VARIABLES
-let location = "galati";
-let lat = "45.4338215";
-let lon = "28.0549395";
+let location = "bucharest";
+let lat = "44.4361414";
+let lon = "26.1027202";
 let units = "metric";
 let unitSymbol = "C";
 let windUnit = "m/s";
@@ -38,6 +38,8 @@ async function requestCoord() {
     lon = coord[0].lon;
   } catch (error) {
     console.log(`Error: ${error}`);
+    clearInput();
+    location = "bucharest";
   }
 }
 // API current weather
@@ -58,7 +60,7 @@ async function requestCurrent() {
     currentObj.setReal(currentWeather.main.feels_like);
     currentObj.setState(currentWeather.weather[0].icon);
     currentObj.setStateDescription(currentWeather.weather[0].description);
-    currentObj.setTemp(currentWeather.main.temp);
+    currentObj.setTemp(Math.round(currentWeather.main.temp * 10) / 10);
     currentObj.setWindSpd(currentWeather.wind.speed);
   } catch (error) {
     console.log(`Error: ${error}`);
@@ -77,15 +79,18 @@ async function requestForecast() {
     );
     const forecast = await response.json();
     for (let i = 0; i <= forecast.list.length; i += 5) {
-      let tempToDisplay = forecast.list[i].main.temp;
+      let tempToDisplay = Math.round(forecast.list[i].main.temp * 10) / 10;
       let stateToDisplay = forecast.list[i].weather[0].icon;
       let timeUnix = forecast.list[i].dt;
       let fullDate = new Date(timeUnix * 1000);
       let weekday = new Date(timeUnix * 1000).getDay();
       const options = { weekday: "long" };
-      let weekdayToDisplay = new Intl.DateTimeFormat('en-US', options).format(fullDate);
+      let weekdayToDisplay = new Intl.DateTimeFormat("en-US", options).format(
+        fullDate
+      );
       let dayToDisplay = new Date(timeUnix * 1000).toLocaleDateString("en-GB");
       let timeToDisplay = new Date(timeUnix * 1000).toLocaleTimeString("en-GB");
+      let hour = new Date(timeUnix * 1000).getHours();
       renderForecast(
         weekdayToDisplay,
         dayToDisplay,
@@ -127,7 +132,7 @@ async function renderCurrent() {
     <div class="right-content-wrapper">
       <div class="pressure-group">
         <div class="icon-wrapper">
-          <i class="fa-solid fa-droplet"></i>
+        <i class="fa-solid fa-bars"></i>
           <div class="pressure-title">Pressure</div>
         </div>
         <div class="pressure">${currentObj.pressure} hPa</div>
@@ -151,7 +156,7 @@ async function renderCurrent() {
     </div>
   </div>
   <div class="bottom-wrapper">
-    <div class="current-date">${date}, ${time} GMT+2</div>
+    <div class="current-date">${date}, ${time} (GMT+2)</div>
     <div class="country">${currentObj.country}</div>
   </div>
 </div>`;
@@ -179,6 +184,9 @@ const clearContainer = () => {
   const forecastContainer = document.querySelector(".js-forecast-content");
   forecastContainer.innerHTML = "";
 };
+const clearInput = () => {
+  userInput.value = "";
+};
 //A USER WILL SELECT A LOCATION
 const setLocation = () => {
   location = userInput.value;
@@ -190,6 +198,7 @@ userInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     setLocation();
+    clearInput();
     renderCurrent();
     clearContainer();
     requestForecast();
@@ -199,6 +208,7 @@ userInput.addEventListener("keypress", (e) => {
 // HANDLE SUBMIT BUTTON
 submitIcon.addEventListener("click", () => {
   setLocation();
+  clearInput();
   renderCurrent();
   clearContainer();
   requestForecast();
@@ -228,3 +238,21 @@ unitHandler.onclick = () => {
 // Initialize project
 renderCurrent();
 requestForecast();
+
+function setTheme() {
+  const darkActive = document.querySelector(".fa-moon");
+  const lightActive = document.querySelector(".fa-lightbulb")
+  const root = document.documentElement;
+  const newTheme = root.className === "Dark" ? "Light" : "Dark";
+  root.className = newTheme;
+  if (newTheme === "Dark") {
+    darkActive.style.display = "none";
+    lightActive.style.display = "block";
+  }
+  if (newTheme === "Light") {
+    darkActive.style.display = "block";
+    lightActive.style.display = "none";
+  }
+}
+const toggleBtn = document.querySelector(".theme-toggle");
+toggleBtn.onclick = setTheme;

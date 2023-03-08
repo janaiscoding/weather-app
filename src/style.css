@@ -3,12 +3,21 @@
   src: url(/src/assets/Inder/Inder-Regular.ttf);
   font-style: normal;
 }
-:root {
+:root.Light {
   font-family: "Inder";
   --background-color: #f8e8e8;
-  --primary-pink: #f18282;
-  --secondary-pink: #fcbfbf;
+  --primary-focus: #f18282;
+  --secondary-focus: #fcbfbf;
+  --line-color: #b98585;
   --font-color: black;
+}
+:root.Dark {
+  font-family: "Inder";
+  --background-color: #141414;
+  --primary-focus: #040608;
+  --secondary-focus: #212329;
+  --font-color: white;
+  --line-color: #121213;
 }
 *,
 *::after,
@@ -27,7 +36,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--primary-pink);
+  background-color: var(--primary-focus);
   height: 10vh;
   padding: 0px 100px;
   -webkit-box-shadow: 0px 5px 17px -6px rgba(0, 0, 0, 0.54);
@@ -60,12 +69,30 @@ input {
   justify-content: center;
   align-items: center;
   gap: 15px;
+  color: var(--font-color);
 }
 .fa-magnifying-glass {
-  font-size: 25px;
+  font-size: 20px;
+}
+.fa-moon {
+  display: block;
+  font-size: 20px;
+}
+.fa-moon:hover,
+.fa-lightbulb:hover {
+  cursor: pointer;
+}
+.fa-lightbulb {
+  display: none;
+  font-size: 20px;
 }
 .fa-magnifying-glass:hover {
   cursor: pointer;
+}
+.right-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 .social-link {
   color: var(--font-color);
@@ -87,23 +114,23 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding:10px 0px;
+  padding: 10px 0px;
 }
-.wrapping-bottom{
+.wrapping-bottom {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  background-color: var(--secondary-pink);
+  background-color: var(--secondary-focus);
   -webkit-box-shadow: 0px 5px 18px -4px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 5px 18px -4px rgba(0, 0, 0, 0.5);
-  border: 1px solid #b98585;
+  border: 1px solid var(--line-color);
   border-radius: 10px;
   padding: 0px 100px 25px 100px;
 }
 .js-forecast-content {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  background-color: var(--secondary-pink);
+  background-color: var(--secondary-focus);
   gap: 10px;
   overflow: auto;
 }
@@ -113,20 +140,20 @@ input {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  border: 1px solid #b98585;
+  border: 1px solid var(--line-color);
   width: fit-content;
   padding: 10px;
   border-radius: 10px;
   height: 200px;
-  background-color: var(--primary-pink);
+  background-color: var(--primary-focus);
 }
 .future-temp {
   font-size: 24px;
 }
-.week-day{
+.week-day {
   font-size: 20px;
 }
-.future-icon{
+.future-icon {
   width: 75px;
   height: 75px;
 }
@@ -139,9 +166,9 @@ input {
 }
 /*CURRENT INFO CARD*/
 .current-weather-info {
-  background-color: var(--secondary-pink);
+  background-color: var(--primary-focus);
   border-radius: 30px;
-  border: 1px solid #b98585;
+  border: 1px solid var(--line-color);
   padding: 20px;
   width: 600px;
   height: 350px;
@@ -152,7 +179,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #b98585;
+  border-bottom: 1px solid var(--line-color);
 }
 .city-name {
   font-size: 48px;
@@ -168,7 +195,7 @@ input {
   flex-direction: column;
   justify-content: center;
   align-self: center;
-  border-right: 1px solid #b98585;
+  border-right: 1px solid var(--line-color);
   padding: 20px;
 }
 .temp-wrapper {
@@ -215,18 +242,18 @@ input {
   font-weight: bold;
 }
 .line {
-  border-bottom: 1px solid #b98585;
+  border-bottom: 1px solid var(--line-color);
 }
 .bottom-wrapper {
   display: flex;
   padding: 10px 20px;
   justify-content: space-between;
-  border-top: 1px solid #b98585;
+  border-top: 1px solid var(--line-color);
 }
 
 /*FOOTER*/
 footer {
-  background-color: var(--primary-pink);
+  background-color: var(--primary-focus);
   -webkit-box-shadow: 0px -5px 10px -4px rgba(0, 0, 0, 0.2);
   box-shadow: 0px -5px 10px -4px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -247,4 +274,5 @@ a:focus {
 input:focus,
 input:active {
   border-color: transparent;
+  color: var(--font-color);
 }
