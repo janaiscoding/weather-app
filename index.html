@@ -5,28 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jana's Weather App</title>
-    <script src="https://kit.fontawesome.com/fd2b67e26b.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/fd2b67e26b.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="main.js" defer></script>
   </head>
   <body>
     <main class="content">
+      <nav class="navbar">
         <div class="search">
-            <input id="location" />
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <button id="imperial">°F</button>
-            <button id="metric">°C</button>
+          <input id="location" />
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <div class="units">
+            <button id="imperial">°F</button> <button id="metric">°C</button>
+          </div>
         </div>
+        <div class="social">
+          <a
+            href="https://github.com/janaiscoding"
+            class="social-link"
+            target="_blank"
+            >©JanaIsCoding</a
+          >
+        </div>
+      </nav>
       <div class="main-info">
         <div class="city-name">Galati</div>
         <div class="country">Romania</div>
         <div class="temp">15°C</div>
+        <div class="state">Cloudy</div>
       </div>
-        <div class="state"></div>
-        <div class="state-description"></div>
-        <div class="pressure"></div>
-        <div class="humidity"></div>
-        <div class="wind-speed"></div>
-      </div>
+      <div class="state"></div>
+      <div class="state-description"></div>
+      <div class="pressure"></div>
+      <div class="humidity"></div>
+      <div class="wind-speed"></div>
     </main>
   </body>
 </html>
