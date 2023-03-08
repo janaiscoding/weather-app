@@ -1,7 +1,7 @@
 <h1> Jana's Weather App </h1>
 
 # Live Demo 
-![](https://github.com/janaiscoding/todo-list/blob/main/assets/TodoApp-Preview.gif)
+![](https://github.com/janaiscoding/weather-app/blob/main/assets/weather-app-preview.gif)
 - See the full live preview [here](https://janaiscoding.github.io/weather-app/)
 
 <h1> Built with </h1>
@@ -31,12 +31,12 @@
 
 <h3> Project details & Copyright Credits </h3>
 
-- This project is part of The Odin Project's [curriculum](https://www.theodinproject.com/lessons/node-path-javascript-todo-list) 
 - During this project, I learned how to fetch and manipulate retrieved data from an API (used [Weather API](https://openweathermap.org/api) for this project)
 - Learned how to handle API errors
-- I worked with classes, async/await functions.
-- Practiced more with CSS Grid & Flexbox. 
-- Other materials I used for this project: [Font Awesome Icons](https://fontawesome.com/).
+- I worked with async/await functions, classes, objects and arrays.
+- Practiced more with Vanilla CSS Grid & Flexbox. 
+- All icons I have used are from [Font Awesome Icons](https://fontawesome.com/) and from [OpenWeather's Weather Conditions](https://openweathermap.org/weather-conditions)
+- This project is part of The Odin Project's [curriculum](https://www.theodinproject.com/lessons/node-path-javascript-weather-app).
 
 <h3> Future plans for this project </h3>
 
