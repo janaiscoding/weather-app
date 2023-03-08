@@ -15,15 +15,10 @@ let unitSymbol = "C";
 let windUnit = "m/s";
 let date;
 let time;
-let unix_timestamp = "1678298238";
+let unix_timestamp;
 // CURRENT WEATHER OBJECT
 let currentObj = new WeatherClass();
 
-// Date Formatter
-function formatDate(unix) {
-  date = new Date(unix * 1000).toLocaleDateString("en-GB");
-  time = new Date(unix * 1000).toLocaleTimeString("en-GB");
-}
 //API functions
 async function requestCoord() {
   try {
@@ -106,8 +101,9 @@ async function requestForecast() {
 
 // DISPLAY CURRENT
 async function renderCurrent() {
-  formatDate(unix_timestamp);
   await requestCurrent();
+  let date = new Date(unix_timestamp * 1000).toLocaleDateString("en-GB");
+  let time = new Date(unix_timestamp * 1000).toLocaleTimeString("en-GB");
   const currentContent = document.querySelector(".js-current-content");
   currentContent.innerHTML = ` <div class="current-weather-info">
   <div class="top-wrapper">
