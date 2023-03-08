@@ -27,22 +27,21 @@
 - Fetching Forecast every 15 hours for the location (5 days duration)
 - Imperial/Metric units swap button
 - In case of input error, the app sets the location back to default: Bucharest
-- Light/Dark Theme
+- Dark and Light Theme
 
 <h3> Project details & Copyright Credits </h3>
 
 - This project is part of The Odin Project's [curriculum](https://www.theodinproject.com/lessons/node-path-javascript-todo-list) 
-- During this project, I gained more experience with OOP, JS Classes, Constructors, exporting Modules.
-- Made functionality of saving data to localStorage for the first time.
+- During this project, I learned how to fetch and manipulate retrieved data from an API (used [Weather API](https://openweathermap.org/api) for this project)
+- Learned how to handle API errors
+- I worked with classes, async/await functions.
 - Practiced more with CSS Grid & Flexbox. 
 - Other materials I used for this project: [Font Awesome Icons](https://fontawesome.com/).
 
 <h3> Future plans for this project </h3>
 
-- Use date-fns package for organizing tasks by date
-- Edit/rename functions
-- Checkmark for task completion
+- Add Autocomplete API
 - Mobile responsiveness
-- Light and Dark mode
-- Delete/clear all function
+
+
 
