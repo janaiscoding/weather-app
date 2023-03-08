@@ -34,13 +34,14 @@ body {
   box-shadow: 0px 5px 17px -6px rgba(0, 0, 0, 0.54);
 }
 .logo {
+  color: var(--font-color);
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 500;
 }
 input {
   width: 300px;
   height: 35px;
-  border-radius: 20px;
+  border-radius: 10px;
   outline: none;
   background-color: var(--background-color);
   border-color: transparent;
@@ -48,10 +49,10 @@ input {
   font-size: 1.1rem;
   font-style: italic;
 }
-.units-handler{
+.units-handler {
   font-size: 25px;
 }
-.units-handler:hover{
+.units-handler:hover {
   cursor: pointer;
 }
 .search {
@@ -63,7 +64,7 @@ input {
 .fa-magnifying-glass {
   font-size: 25px;
 }
-.fa-magnifying-glass:hover{
+.fa-magnifying-glass:hover {
   cursor: pointer;
 }
 .social-link {
@@ -75,9 +76,66 @@ input {
 .content {
   padding: 0px 100px;
   height: 85vh;
+  padding: 10px;
+}
+.js-current-content {
   display: flex;
   justify-content: center;
-  padding: 50px;
+}
+.title {
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:10px 0px;
+}
+.wrapping-bottom{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  background-color: var(--secondary-pink);
+  -webkit-box-shadow: 0px 5px 18px -4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 5px 18px -4px rgba(0, 0, 0, 0.5);
+  border: 1px solid #b98585;
+  border-radius: 10px;
+  padding: 0px 100px 25px 100px;
+}
+.js-forecast-content {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  background-color: var(--secondary-pink);
+  gap: 10px;
+  overflow: auto;
+}
+
+.forecast-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid #b98585;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+  height: 200px;
+  background-color: var(--primary-pink);
+}
+.future-temp {
+  font-size: 24px;
+}
+.week-day{
+  font-size: 20px;
+}
+.future-icon{
+  width: 75px;
+  height: 75px;
+}
+.future-date {
+  font-size: 14px;
+  text-align: center;
+}
+.future-units {
+  font-size: 14px;
 }
 /*CURRENT INFO CARD*/
 .current-weather-info {
@@ -118,13 +176,13 @@ input {
   align-items: flex-start;
   justify-content: center;
 }
-.icon-wrapper{
+.icon-wrapper {
   display: flex;
   justify-content: center;
   gap: 10px;
   align-items: center;
 }
-.fa-temperature-three-quarters{
+.fa-temperature-three-quarters {
   font-size: 16px;
 }
 .state-description {

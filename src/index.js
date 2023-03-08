@@ -6,17 +6,24 @@ const API_KEY = "e242732684f64bf197c925a0f8a7be98";
 const userInput = document.getElementById("location");
 const submitIcon = document.querySelector(".fa-magnifying-glass");
 const unitHandler = document.querySelector(".units-handler");
-// variables
+// VARIABLES
 let location = "galati";
 let lat = "45.4338215";
 let lon = "28.0549395";
 let units = "metric";
 let unitSymbol = "C";
 let windUnit = "m/s";
-// weather app class
+let date;
+let time;
+let unix_timestamp = "1678298238";
+// CURRENT WEATHER OBJECT
 let currentObj = new WeatherClass();
-// Initialize project
-renderCurrent();
+
+// Date Formatter
+function formatDate(unix) {
+  date = new Date(unix * 1000).toLocaleDateString("en-GB");
+  time = new Date(unix * 1000).toLocaleTimeString("en-GB");
+}
 //API functions
 async function requestCoord() {
   try {
@@ -44,12 +51,12 @@ async function requestCurrent() {
       }
     );
     const currentWeather = await response.json();
-    console.log(currentWeather);
+    unix_timestamp = currentWeather.dt;
     currentObj.setCountry(currentWeather.sys.country);
     currentObj.setHumidity(currentWeather.main.humidity);
     currentObj.setPressure(currentWeather.main.pressure);
     currentObj.setReal(currentWeather.main.feels_like);
-    currentObj.setState(currentWeather.weather[0].main);
+    currentObj.setState(currentWeather.weather[0].icon);
     currentObj.setStateDescription(currentWeather.weather[0].description);
     currentObj.setTemp(currentWeather.main.temp);
     currentObj.setWindSpd(currentWeather.wind.speed);
@@ -57,15 +64,50 @@ async function requestCurrent() {
     console.log(`Error: ${error}`);
   }
 }
-// DISPLAY
-async function renderCurrent() {
+
+// request future
+async function requestForecast() {
   await requestCoord();
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`,
+      {
+        mode: "cors",
+      }
+    );
+    const forecast = await response.json();
+    for (let i = 0; i <= forecast.list.length; i += 5) {
+      let tempToDisplay = forecast.list[i].main.temp;
+      let stateToDisplay = forecast.list[i].weather[0].icon;
+      let timeUnix = forecast.list[i].dt;
+      let fullDate = new Date(timeUnix * 1000);
+      let weekday = new Date(timeUnix * 1000).getDay();
+      const options = { weekday: "long" };
+      let weekdayToDisplay = new Intl.DateTimeFormat('en-US', options).format(fullDate);
+      let dayToDisplay = new Date(timeUnix * 1000).toLocaleDateString("en-GB");
+      let timeToDisplay = new Date(timeUnix * 1000).toLocaleTimeString("en-GB");
+      renderForecast(
+        weekdayToDisplay,
+        dayToDisplay,
+        timeToDisplay,
+        stateToDisplay,
+        tempToDisplay
+      );
+    }
+  } catch (error) {
+    console.log(`Error: ${error}`);
+  }
+}
+
+// DISPLAY CURRENT
+async function renderCurrent() {
+  formatDate(unix_timestamp);
   await requestCurrent();
-  const content = document.querySelector(".content");
-  content.innerHTML = ` <div class="current-weather-info">
+  const currentContent = document.querySelector(".js-current-content");
+  currentContent.innerHTML = ` <div class="current-weather-info">
   <div class="top-wrapper">
     <img
-      src="./assets-temporary/sunny.png"
+      src="https://openweathermap.org/img/wn/${currentObj.state}@2x.png"
       alt="image of state of current weather"
       class="state"
     />
@@ -109,14 +151,34 @@ async function renderCurrent() {
     </div>
   </div>
   <div class="bottom-wrapper">
-    <div class="current-date">8 March, 2023</div>
+    <div class="current-date">${date}, ${time} GMT+2</div>
     <div class="country">${currentObj.country}</div>
   </div>
 </div>`;
-  console.log(currentObj);
-  console.log(`rendering done`);
 }
-
+// CREATE NEW CARD
+function renderForecast(weekDay, day, time, icon, temp) {
+  const forecastContainer = document.querySelector(".js-forecast-content");
+  forecastContainer.innerHTML += `
+  <div class="forecast-card">
+          <div class="week-day">${weekDay}</div>
+          <div class="future-date">${day}, ${time} GMT+2</div>
+          <img
+      src="https://openweathermap.org/img/wn/${icon}@2x.png"
+      alt="image of state of current weather"
+      class="future-icon"
+    />
+          <div class="temp-wrapper">
+            <div class="future-temp">${temp}</div>
+            <div class="future-units">°${unitSymbol}</div>
+          </div>
+        </div>`;
+}
+//HANDLE CLEARING FOR UNIT SWITCH
+const clearContainer = () => {
+  const forecastContainer = document.querySelector(".js-forecast-content");
+  forecastContainer.innerHTML = "";
+};
 //A USER WILL SELECT A LOCATION
 const setLocation = () => {
   location = userInput.value;
@@ -128,8 +190,9 @@ userInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     setLocation();
-    requestCurrent();
     renderCurrent();
+    clearContainer();
+    requestForecast();
   }
 });
 
@@ -137,6 +200,8 @@ userInput.addEventListener("keypress", (e) => {
 submitIcon.addEventListener("click", () => {
   setLocation();
   renderCurrent();
+  clearContainer();
+  requestForecast();
 });
 
 // HANDLE UNITS BUTTONS
@@ -144,16 +209,22 @@ const updateUnit = () => {
   if (unitHandler.textContent === "°C") {
     units = "imperial";
     unitSymbol = "F";
-    windUnit = "m/h"
+    windUnit = "m/h";
     unitHandler.textContent = "°F";
   } else if (unitHandler.textContent === "°F") {
     units = "metric";
     unitSymbol = "C";
-    windUnit = "m/s"
+    windUnit = "m/s";
     unitHandler.textContent = "°C";
   }
 };
 unitHandler.onclick = () => {
   updateUnit();
   renderCurrent();
+  clearContainer();
+  requestForecast();
 };
+
+// Initialize project
+renderCurrent();
+requestForecast();
